@@ -4,7 +4,7 @@ import Header from "./Header";
 import Technologies from "./Technologies";
 import Footer from "./Footer";
 
-function App() {
+const App = () => {
     return (
         <div className="App">
             <Header />

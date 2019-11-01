@@ -1,9 +1,11 @@
 import React from 'react';
 
-function Header() {
+const Header = ()=> {
     return (
         <div>
-            Header
+            <a href="#s">Home</a>
+            <a href="#s">News</a>
+            <a href="#s">Messages</a>
         </div>
     );
 }
