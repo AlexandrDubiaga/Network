@@ -1,15 +1,23 @@
 import React from 'react';
 import './App.css';
-import Header from "./Header";
-import Technologies from "./Technologies";
-import Footer from "./Footer";
 
 const App = () => {
     return (
-        <div className="App">
-            <Header />
-            <Technologies />
-            <Footer />
+        <div className="app-wrapper">
+            <header className="header">
+                <img src="https://mirpozitiva.ru/uploads/posts/2016-08/medium/1472042903_31.jpg"/>
+            </header>
+            <nav  className="nav">
+                <div>
+                    Profile
+                </div>
+                <div>
+                    Messages
+                </div>
+            </nav>
+            <div  className="content">
+                Main Content
+            </div>
         </div>
     );
 }
