@@ -11,32 +11,30 @@ const DialogItem = props => {
         </div>
     )
 }
+const Message = props => {
+    return (
+        <div className={`${style.dialog} ${style.active}`}>
+            <div>{props.message}</div>
+        </div>
+    )
+}
 
 const Dialogs = () => {
     return (
         <div className={style.dialogs}>
             <div className={style.dialogsItems}>
                 <DialogItem name="Alex" id="1"/>
-                <div className={style.dialog}>
-                    <NavLink to="/dialogs/2">Solmir__</NavLink>
-                </div>
-                <div className={style.dialog}>
-                    <NavLink to="/dialogs/3">Hworang</NavLink>
-                </div>
-                <div className={style.dialog}>
-                    <NavLink to="/dialogs/4">Paul</NavLink>
-                </div>
-                <div className={style.dialog}>
-                    <NavLink to="/dialogs/5">Messi</NavLink>
-                </div>
+                <DialogItem name="Solmir__" id="2"/>
+                <DialogItem name="Hworang" id="3"/>
+                <DialogItem name="Paul" id="4"/>
+                <DialogItem name="Messi" id="5"/>
+
             </div>
             <div className={style.messages}>
-                <div className={style.message}>Hi</div>
-                <div className={style.message}>I winnig incubator</div>
-                <div className={style.message}>React</div>
-                <div className={style.message}>Redux</div>
-                <div className={style.message}>Flux</div>
-
+                <Message message="I winnig incubator"/>
+                <Message message="React"/>
+                <Message message="Redux"/>
+                <Message message="Flux"/>
             </div>
 
         </div>
