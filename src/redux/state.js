@@ -1,3 +1,4 @@
+import {rerender} from "../render";
 let state = {
     profilePage: {
         posts: [{id: 1, message: "Hi im new Post", likesCount: 2}, {
@@ -21,9 +22,18 @@ let state = {
             {id: 4, message: "Flux"}
         ]
     },
-    siteBar:{
-        
-    }
+    siteBar: {}
+}
 
+
+export let addPost = () => {
+
+    let newPost = {
+        id: 3,
+        message: "new Post",
+        likesCount: 22
+    }
+    state.profilePage.posts.push(newPost);
+    rerender(state);
 }
 export default state;

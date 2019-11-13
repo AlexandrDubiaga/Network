@@ -6,16 +6,21 @@ import Post from "./Posts/Post";
 const MyPosts = props => {
 
     let postsElements = props.state.profilePage.posts.map(p => <Post message={p.message} likes={p.likesCount}/>)
-
+    let newPostRef = React.createRef();
+    let addPost = () => {
+        let text = newPostRef.current.value;
+        props.addPost();
+        newPostRef.current.value='';
+    }
     return (
         <div className={style.postBlock}>
             <h3>My Posts</h3>
             <div>
                 <div>
-                    <textarea></textarea>
+                    <textarea ref={newPostRef}></textarea>
                 </div>
                 <div>
-                    <button>Add post</button>
+                    <button onClick={addPost}>Add post</button>
                 </div>
             </div>
             <div className={style.posts}>
