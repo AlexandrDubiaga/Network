@@ -6,6 +6,7 @@ let state = {
             message: "Its my first Post",
             likesCount: 15
         }],
+        newPostText: 'Solmir__ winner'
     },
     dialogsPage: {
         dialogs: [
@@ -27,13 +28,20 @@ let state = {
 
 
 export let addPost = () => {
-
     let newPost = {
         id: 3,
-        message: "new Post",
+        message: state.profilePage.newPostText,
         likesCount: 22
     }
     state.profilePage.posts.push(newPost);
+    state.profilePage.newPostText = ''
     rerender(state);
 }
+
+
+export let updateNewPostText = (text) => {
+    state.profilePage.newPostText = text;
+    rerender(state);
+}
+
 export default state;
