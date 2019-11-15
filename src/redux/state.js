@@ -48,6 +48,7 @@ let store = {
     subscribe(observer){
         this._callSubscriber = observer;
     }
+
 }
 
 
