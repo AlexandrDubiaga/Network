@@ -1,8 +1,20 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import './index.css';
+import App from './App';
+import * as serviceWorker from './serviceWorker';
 import {BrowserRouter, Route} from "react-router-dom";
-import {rerender} from "./render";
-import state from "./redux/state";
+import {addPost, subscribe, updateNewPostText} from "./redux/state";
+import store from "./redux/state";
 
 
-rerender(state);
+let rerender = (state) => {
+    ReactDOM.render(
+        <BrowserRouter>
+            <App state={store.getState()} addPost={store.addPost} updateNewPostText={store.updateNewPostText}/> </BrowserRouter>,
+        document.getElementById('root')
+    );
+}
+
+rerender(store.getState());
+store.subscribe(rerender);
