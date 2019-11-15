@@ -28,28 +28,27 @@ let store = {
     getState(){
         return this._state;
     },
-    _callSubscriber(){},
-
-    addPost(){
-        let newPost = {
-            id: 3,
-            message: this.getState().profilePage.newPostText,
-            likesCount: 22
-        }
-        this.getState().profilePage.posts.push(newPost);
-        this.getState().profilePage.newPostText = ''
-        this._callSubscriber(this.getState());
-    },
-
-    updateNewPostText(text){
-        this.getState().profilePage.newPostText = text;
-        this._callSubscriber(this.getState());
+    _callSubscriber(){
     },
     subscribe(observer){
         this._callSubscriber = observer;
+    },
+    dispatch(action){
+        if (action.type === 'ADD-POST') {
+            let newPost = {
+                id: 3,
+                message: this.getState().profilePage.newPostText,
+                likesCount: 22
+            }
+            this.getState().profilePage.posts.push(newPost);
+            this.getState().profilePage.newPostText = ''
+            this._callSubscriber(this.getState());
+        } else if (action.type === 'UPDATE-NEW-POST-TEXT') {
+            this.getState().profilePage.newPostText = action.text;
+            this._callSubscriber(this.getState());
+        }
+
     }
-
 }
-
 
 export default store;

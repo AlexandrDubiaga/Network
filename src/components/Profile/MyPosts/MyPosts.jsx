@@ -7,11 +7,11 @@ const MyPosts = props => {
     let postsElements = props.profilePage.posts.map(p => <Post message={p.message} likes={p.likesCount}/>)
     let newPostRef = React.createRef();
     let addPost = () => {
-        props.addPost();
+        props.dispatch({type:'ADD-POST'});
     }
     let onPostChange = () => {
         let text = newPostRef.current.value;
-        props.updateNewPostText(text);
+        props.dispatch({type:'UPDATE-NEW-POST-TEXT',text:text});
     }
     return (
         <div className={style.postBlock}>
