@@ -8,14 +8,17 @@ import {BrowserRouter, Route} from "react-router-dom";
 
 const App = props => {
     return (
-            <div className="app-wrapper">
-                <Header/>
-                <Navbar/>
-                <div className="app-wrapper-content">
-                    <Route path="/dialogs" render={() => <Dialogs state={props.state}/>}/>
-                    <Route path="/profile" render={() => <Profile dispatch={props.dispatch} profilePage={props.state.profilePage}/>}/>
-                </div>
+        <div className="app-wrapper">
+            <Header/>
+            <Navbar/>
+            <div className="app-wrapper-content">
+                <Route path="/dialogs" render={() => <Dialogs state={props.state} dispatch={props.dispatch}/>}/>
+                <Route path="/profile" render={
+                    () => <Profile dispatch={props.dispatch}
+                                   profilePage={props.state.profilePage}/>
+                }/>
             </div>
+        </div>
     );
 }
 
