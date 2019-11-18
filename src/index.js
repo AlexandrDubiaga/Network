@@ -11,7 +11,7 @@ import store from "./redux/state";
 let rerender = (state) => {
     ReactDOM.render(
         <BrowserRouter>
-            <App state={state} dispatch={store.dispatch.bind(store)}/> </BrowserRouter>,
+            <App state={state} store={store}/> </BrowserRouter>,
         document.getElementById('root')
     );
 }
