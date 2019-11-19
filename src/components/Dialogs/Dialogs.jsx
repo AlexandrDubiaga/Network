@@ -2,20 +2,19 @@ import React from 'react';
 import style from './Dialogs.module.css';
 import Message from "./Message/Message";
 import DialogItem from "./DialogItem/Dialogitem";
-import {sendNewMessageActionCreator, updateNewMessageActionCreator} from "../../redux/dialogsReducer";
 
 
 const Dialogs = props => {
-    const dialogsElements = props.store._state.dialogsPage.dialogs.map(dialog => <DialogItem name={dialog.name} id={dialog.id}/>);
-    const messagesElements = props.store._state.dialogsPage.messages.map(mess => <Message message={mess.message}/>);
+    const dialogsElements = props.dialogs.map(dialog => <DialogItem name={dialog.name} id={dialog.id}/>);
+    const messagesElements = props.messages.map(mess => <Message message={mess.message}/>);
 
     let newMessageRef = React.createRef();
     let addMessage = () => {
-        props.store.dispatch(sendNewMessageActionCreator());
+        props.addMessage();
     }
     let onMessageChange = () => {
         let text = newMessageRef.current.value;
-        props.store.dispatch(updateNewMessageActionCreator(text));
+        props.onMessageChange(text);
     }
     return (
         <div className={style.dialogs}>
@@ -28,7 +27,7 @@ const Dialogs = props => {
             <div>
                 <div>
                     <textarea ref={newMessageRef} onChange={onMessageChange}
-                              value={props.store._state.dialogsPage.newMessageBody}/>
+                              value={props.newMessageBody}/>
                 </div>
                 <div>
                     <button onClick={addMessage}>Add Message</button>
