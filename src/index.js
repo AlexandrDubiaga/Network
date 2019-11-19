@@ -4,8 +4,8 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import {BrowserRouter, Route} from "react-router-dom";
-import {addPost, subscribe, updateNewPostText} from "./redux/state";
-import store from "./redux/state";
+import {addPost, subscribe, updateNewPostText} from "./redux/store";
+import store from "./redux/store";
 
 
 let rerender = (state) => {
@@ -17,4 +17,7 @@ let rerender = (state) => {
 }
 
 rerender(store.getState());
-store.subscribe(rerender);
+store.subscribe(()=>{
+    let state = store.getState();
+    rerender(state);
+});
