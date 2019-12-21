@@ -2,18 +2,19 @@ import React from 'react';
 import style from './Users.module.css';
 
 const Users = props => {
-    debugger
     let pageCount = props.usersCountFromServer / props.countUsersOnCurrentPage;
     let pages = []
-    for(let i=1;i<=pageCount;i++){
+    for (let i = 1; i <= pageCount; i++) {
         pages.push(i)
     }
 
     return (
         <div>
             <div>
-                {pages.map(p=>{
-                    return <span onClick={()=>{props.onPageChanged(p)}} className={props.currentPage === p && style.selectedPage}>{p}</span>
+                {pages.map(p => {
+                    return <span onClick={() => {
+                        props.onPageChanged(p)
+                    }} className={props.currentPage === p && style.selectedPage}>{p}</span>
                 })}
             </div>
             {props.users.map(u => {
@@ -28,8 +29,6 @@ const Users = props => {
                              <div>Id: {u.id}</div>
                             <div>Full Name: {u.name}</div>
                                <div>Status: {u.status}</div>
-                            {/*<div>Country: {u.location.country}</div>
-                             <div>City: {u.location.city}</div>*/}
                         </div>
                     </span>
 
