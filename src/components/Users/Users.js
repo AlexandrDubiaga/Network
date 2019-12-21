@@ -1,5 +1,6 @@
 import React from 'react';
 import style from './Users.module.css';
+import {NavLink} from "react-router-dom";
 
 const Users = props => {
     let pageCount = props.usersCountFromServer / props.countUsersOnCurrentPage;
@@ -21,7 +22,9 @@ const Users = props => {
                 return (<div>
                     <span>
                         <div>
-                        <img src={"https://mirpozitiva.ru/uploads/posts/2016-09/medium/1474011210_15.jpg"}/>
+                            <NavLink to={"/propfile/"+u.id}>
+                                <img src={"https://mirpozitiva.ru/uploads/posts/2016-09/medium/1474011210_15.jpg"}/>
+                            </NavLink>
                         </div>
                         <div> <button
                             onClick={u.followed ? () => props.unfollowAC(u.id) : () => props.followAC(u.id)}>{u.followed ? 'UNFOLLOW' : 'FOLLOW'}</button></div>
