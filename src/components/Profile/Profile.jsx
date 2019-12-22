@@ -1,16 +1,19 @@
 import React from 'react';
 import style from './Profile.module.css';
-
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
 import MyPostsContainer from "./MyPosts/MyPostsContainer";
 
-const Profile = props => {
-    return (
-        <div className={style.content}>
-            <ProfileInfo />
-            <MyPostsContainer store={props.store} />
-        </div>
-    );
+
+class Profile extends React.Component {
+    render() {
+        return (
+            <div className={style.content}>
+                <ProfileInfo {...this.props} />
+                <MyPostsContainer  />
+            </div>
+        );
+    }
+
 }
 
-export default Profile;
+export default Profile
