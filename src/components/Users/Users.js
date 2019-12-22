@@ -23,11 +23,11 @@ const Users = props => {
                     <span>
                         <div>
                             <NavLink to={"/profile/"+u.id}>
-                                <img src={"https://mirpozitiva.ru/uploads/posts/2016-09/medium/1474011210_15.jpg"}/>
+                                <img src={u.photos.small===null?"https://mirpozitiva.ru/uploads/posts/2016-09/medium/1474011210_15.jpg":u.photos.small}/>
                             </NavLink>
                         </div>
                         <div> <button
-                            onClick={u.followed ? () => props.unfollowAC(u.id) : () => props.followAC(u.id)}>{u.followed ? 'UNFOLLOW' : 'FOLLOW'}</button></div>
+                            onClick={u.followed ? () => props.onUnfollow(u.id) : () => props.onFollow(u.id)}>{u.followed ? 'UNFOLLOW' : 'FOLLOW'}</button></div>
                         <div>
                              <div>Id: {u.id}</div>
                             <div>Full Name: {u.name}</div>
