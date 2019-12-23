@@ -12,17 +12,11 @@ import {
     setIsFetching
 } from "../../redux/UsersReducer";
 import Preloader from "../common/Preloader";
+import {usersAPI} from "../../api/api";
 
 class UsersContainer extends React.Component {
     componentDidMount() {
-        this.instance = axios.create({
-            withCredentials: true,
-            baseURL: "https://social-network.samuraijs.com/api/1.0/",
-            headers: {"API-KEY": "7c2b1d62-7561-4a6d-a49c-4ca6890f67a4"}
-
-        });
-        let users = this.instance.get(`users?page=${this.props.currentPage}&count=${this.props.countUsersOnCurrentPage}`);
-        users.then(response => {
+        usersAPI.getUsers(this.props.currentPage, this.props.countUsersOnCurrentPage).then(response => {
             this.props.setUsersAC(response.data.items);
             this.props.setTotalCountUsersAC(response.data.totalCount)
         })
@@ -31,27 +25,24 @@ class UsersContainer extends React.Component {
     onPageChanged = (page) => {
         this.props.setIsFetching(true)
         this.props.setCurrentPage(page)
-        let users = this.instance.get(`users?page=${page}&count=${this.props.countUsersOnCurrentPage}`);
-        users.then(response => {
+        usersAPI.getUsers(page, this.props.countUsersOnCurrentPage).then(response => {
             this.props.setIsFetching(false)
             this.props.setUsersAC(response.data.items);
         })
     }
     onFollow = (userId) => {
         this.props.setIsFetching(true)
-        this.instance.post(`follow/${userId}`).then(response => {
-           if(response.data.resultCode==0){
-               this.props.setIsFetching(false)
-               this.props.followAC(userId);
-           }
+        usersAPI.followUser(userId).then(response => {
+            if (response.data.resultCode === 0) {
+                this.props.setIsFetching(false)
+                this.props.followAC(userId);
+            }
         })
-
-
     }
     onUnfollow = (userId) => {
         this.props.setIsFetching(true)
-        this.instance.delete(`follow/${userId}`).then(response => {
-            if(response.data.resultCode==0){
+        usersAPI.unFollowUser(userId).then(response => {
+            if (response.data.resultCode === 0) {
                 this.props.setIsFetching(false)
                 this.props.unfollowAC(userId);
             }
@@ -61,12 +52,11 @@ class UsersContainer extends React.Component {
     render() {
         return <>
         {this.props.isFetching ? <Preloader/> : null}
-        <div>
-            <Users isFetching={this.props.isFetching} countUsersOnCurrentPage={this.props.countUsersOnCurrentPage} onPageChanged={this.onPageChanged}
-                   usersCountFromServer={this.props.usersCountFromServer} users={this.props.users}
-                   currentPage={this.props.currentPage}
-                   onFollow={this.onFollow} onUnfollow={this.onUnfollow}/>
-        </div>
+        <Users isFetching={this.props.isFetching} countUsersOnCurrentPage={this.props.countUsersOnCurrentPage}
+               onPageChanged={this.onPageChanged}
+               usersCountFromServer={this.props.usersCountFromServer} users={this.props.users}
+               currentPage={this.props.currentPage}
+               onFollow={this.onFollow} onUnfollow={this.onUnfollow}/>
         </>
     }
 }
