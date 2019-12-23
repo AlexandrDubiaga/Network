@@ -7,7 +7,7 @@ const ProfileInfo = props => {
     }
     return (
         <div>
-            <div>
+            <div className={style.pic}>
                 <img src="https://klike.net/uploads/posts/2019-07/1562069947_1.jpg"/>
             </div>
             <div className={style.descriptionBlock}>

@@ -5,3 +5,6 @@
     width: 150px;
     height: 150px;
 }
+.pic img{
+    width: 100%;
+}

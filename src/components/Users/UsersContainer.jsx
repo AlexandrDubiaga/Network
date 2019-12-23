@@ -16,24 +16,24 @@ import {usersAPI} from "../../api/api";
 
 class UsersContainer extends React.Component {
     componentDidMount() {
-        usersAPI.getUsers(this.props.currentPage, this.props.countUsersOnCurrentPage).then(response => {
-            this.props.setUsersAC(response.data.items);
-            this.props.setTotalCountUsersAC(response.data.totalCount)
+        usersAPI.getUsers(this.props.currentPage, this.props.countUsersOnCurrentPage).then(data => {
+            this.props.setUsersAC(data.items);
+            this.props.setTotalCountUsersAC(data.totalCount)
         })
     }
 
     onPageChanged = (page) => {
         this.props.setIsFetching(true)
         this.props.setCurrentPage(page)
-        usersAPI.getUsers(page, this.props.countUsersOnCurrentPage).then(response => {
+        usersAPI.getUsers(page, this.props.countUsersOnCurrentPage).then(data => {
             this.props.setIsFetching(false)
-            this.props.setUsersAC(response.data.items);
+            this.props.setUsersAC(data.items);
         })
     }
     onFollow = (userId) => {
         this.props.setIsFetching(true)
-        usersAPI.followUser(userId).then(response => {
-            if (response.data.resultCode === 0) {
+        usersAPI.followUser(userId).then(data => {
+            if (data.resultCode === 0) {
                 this.props.setIsFetching(false)
                 this.props.followAC(userId);
             }
@@ -41,8 +41,8 @@ class UsersContainer extends React.Component {
     }
     onUnfollow = (userId) => {
         this.props.setIsFetching(true)
-        usersAPI.unFollowUser(userId).then(response => {
-            if (response.data.resultCode === 0) {
+        usersAPI.unFollowUser(userId).then(data => {
+            if (data.resultCode === 0) {
                 this.props.setIsFetching(false)
                 this.props.unfollowAC(userId);
             }
