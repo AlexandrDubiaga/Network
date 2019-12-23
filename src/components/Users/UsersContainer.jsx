@@ -26,7 +26,6 @@ class UsersContainer extends React.Component {
             this.props.setUsersAC(response.data.items);
             this.props.setTotalCountUsersAC(response.data.totalCount)
         })
-
     }
 
     onPageChanged = (page) => {
@@ -39,36 +38,31 @@ class UsersContainer extends React.Component {
         })
     }
     onFollow = (userId) => {
+        this.props.setIsFetching(true)
         this.instance.post(`follow/${userId}`).then(response => {
            if(response.data.resultCode==0){
-               this.instance.get(`follow/${userId}`).then(response => {
-                   if(response.data.resultCode==0){
-                       this.props.followAC(response.data);
-                   }
-               })
+               this.props.setIsFetching(false)
+               this.props.followAC(userId);
            }
         })
 
 
     }
     onUnfollow = (userId) => {
+        this.props.setIsFetching(true)
         this.instance.delete(`follow/${userId}`).then(response => {
             if(response.data.resultCode==0){
-                this.instance.get(`follow/${userId}`).then(response => {
-                    if(response.data.resultCode==0){
-                        this.props.followAC(response.data);
-                    }
-                })
+                this.props.setIsFetching(false)
+                this.props.unfollowAC(userId);
             }
         })
-
     }
 
     render() {
         return <>
         {this.props.isFetching ? <Preloader/> : null}
         <div>
-            <Users countUsersOnCurrentPage={this.props.countUsersOnCurrentPage} onPageChanged={this.onPageChanged}
+            <Users isFetching={this.props.isFetching} countUsersOnCurrentPage={this.props.countUsersOnCurrentPage} onPageChanged={this.onPageChanged}
                    usersCountFromServer={this.props.usersCountFromServer} users={this.props.users}
                    currentPage={this.props.currentPage}
                    onFollow={this.onFollow} onUnfollow={this.onUnfollow}/>
