@@ -6,7 +6,8 @@ import {compose} from "redux";
 
 let mapStateToProps = (state) => {
     return {
-        dialogsPage: state.dialogsPage
+        dialogsPage: state.dialogsPage,
+        isAuth:state.auth.isAuth
     }
 }
 export default compose(connect(mapStateToProps, {sendNewMessageActionCreator,updateNewMessageActionCreator}))(Dialogs);
