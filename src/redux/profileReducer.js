@@ -1,3 +1,4 @@
+import {profileAPI} from "../api/api";
 const ADD_POST = 'ADD-POST';
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
 const SET_USER_PROFILE = 'UPDATE-NEW-SET_USER_PROFILE-TEXT';
@@ -59,6 +60,13 @@ export let updateNewPostTextActionCreator = (newText) => {
 export let setUserProfile = (userProfile) => {
     return {
         type: SET_USER_PROFILE, userProfile
+    }
+}
+
+export const getUserProfile = (userIdFromWithRouterParams) => {
+    return async (dispatch) => {
+       let data = await  profileAPI.getUsersProfile(userIdFromWithRouterParams);
+        dispatch(setUserProfile(data));
     }
 }
 
