@@ -2,57 +2,33 @@ import React from 'react';
 import {connect} from "react-redux";
 import {compose} from "redux";
 import Users from "./Users";
-import axios from 'axios';
 import {
-    followAC,
-    setUsersAC,
-    unfollowAC,
-    setCurrentPage,
-    setTotalCountUsersAC,
-    setIsFetching, followingInProgressAC
+    follow,
+    getUsers, unfollow, pageChanged
 } from "../../redux/UsersReducer";
 import Preloader from "../common/Preloader";
-import {usersAPI} from "../../api/api";
+
 
 class UsersContainer extends React.Component {
     componentDidMount() {
-        usersAPI.getUsers(this.props.currentPage, this.props.countUsersOnCurrentPage).then(data => {
-            this.props.setUsersAC(data.items);
-            this.props.setTotalCountUsersAC(data.totalCount)
-        })
+        this.props.getUsers(this.props.currentPage, this.props.countUsersOnCurrentPage);
     }
 
     onPageChanged = (page) => {
-        this.props.setIsFetching(true)
-        this.props.setCurrentPage(page)
-        usersAPI.getUsers(page, this.props.countUsersOnCurrentPage).then(data => {
-            this.props.setIsFetching(false)
-            this.props.setUsersAC(data.items);
-        })
+        this.props.pageChanged(page,this.props.countUsersOnCurrentPage)
     }
     onFollow = (userId) => {
-        this.props.followingInProgressAC(true,userId)
-        usersAPI.followUser(userId).then(data => {
-            if (data.resultCode === 0) {
-                this.props.followingInProgressAC(false,userId)
-                this.props.followAC(userId);
-            }
-        })
+        this.props.follow(userId)
     }
     onUnfollow = (userId) => {
-        this.props.followingInProgressAC(true,userId)
-        usersAPI.unFollowUser(userId).then(data => {
-            if (data.resultCode === 0) {
-                this.props.followingInProgressAC(false,userId)
-                this.props.unfollowAC(userId);
-            }
-        })
+        this.props.unfollow(userId)
     }
 
     render() {
         return <>
         {this.props.isFetching ? <Preloader/> : null}
-        <Users followingInProgress={this.props.followingInProgress} countUsersOnCurrentPage={this.props.countUsersOnCurrentPage}
+        <Users followingInProgress={this.props.followingInProgress}
+               countUsersOnCurrentPage={this.props.countUsersOnCurrentPage}
                onPageChanged={this.onPageChanged}
                usersCountFromServer={this.props.usersCountFromServer} users={this.props.users}
                currentPage={this.props.currentPage}
@@ -68,16 +44,11 @@ let mapStateToProps = (state) => {
         usersCountFromServer: state.usersPage.usersCountFromServer,
         currentPage: state.usersPage.currentPage,
         isFetching: state.usersPage.isFetching,
-        followingInProgress:state.usersPage.followingInProgress
+        followingInProgress: state.usersPage.followingInProgress
     }
 }
 export default compose(connect(mapStateToProps, {
-    setCurrentPage,
-    setIsFetching,
-    setTotalCountUsersAC,
-    followAC,
-    unfollowAC,
-    setUsersAC,
-    followingInProgressAC
+    follow, unfollow,
+    getUsers, pageChanged
 }))(UsersContainer);
 

@@ -1,3 +1,4 @@
+import {usersAPI} from "../api/api";
 const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';
 const SET_USERS = 'SET_USERS';
@@ -7,16 +8,13 @@ const SET_TOUGLE_IS_FETCHING = 'SET_TOUGLE_IS_FETCHING';
 const FOLLOWING_IN_PROGRESS = 'FOLLOWING_IN_PROGRESS';
 
 
-
-
-
 let initialState = {
     users: [],
-    countUsersOnCurrentPage:5,
-    usersCountFromServer:0,
-    currentPage:1,
-    isFetching:false,
-    followingInProgress:[]
+    countUsersOnCurrentPage: 5,
+    usersCountFromServer: 0,
+    currentPage: 1,
+    isFetching: false,
+    followingInProgress: []
 }
 const usersReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -34,21 +32,21 @@ const usersReducer = (state = initialState, action) => {
 
         case SET_USERS: {
             return {
-                ...state,users:action.users,
+                ...state, users: action.users,
 
             }
         }
         case SET_TOTAL_COUNT_USERS: {
             return {
                 ...state,
-                usersCountFromServer:action.countUsers
+                usersCountFromServer: action.countUsers
 
 
             }
         }
         case SET_CURRENT_PAGE: {
             return {
-                ...state,currentPage:action.page
+                ...state, currentPage: action.page
             }
         }
         case UNFOLLOW: {
@@ -65,17 +63,15 @@ const usersReducer = (state = initialState, action) => {
         case SET_TOUGLE_IS_FETCHING: {
             return {
                 ...state,
-                isFetching:action.isFetching
+                isFetching: action.isFetching
             }
         }
         case FOLLOWING_IN_PROGRESS: {
             return {
                 ...state,
-                followingInProgress:action.isFetching?[...state.followingInProgress,action.userId]:[state.followingInProgress.filter(id=>id!=action.userId)]
+                followingInProgress: action.isFetching ? [...state.followingInProgress, action.userId] : [state.followingInProgress.filter(id => id != action.userId)]
             }
         }
-
-
 
 
         default:
@@ -86,16 +82,50 @@ const usersReducer = (state = initialState, action) => {
 
 export const followAC = (userId) => ({type: FOLLOW, userId})
 export const unfollowAC = (userId) => ({type: UNFOLLOW, userId})
-export const setUsersAC = (users) => ({type: SET_USERS,users})
-export const setCurrentPage = (page) => ({type: SET_CURRENT_PAGE,page})
-export const setTotalCountUsersAC = (countUsers) => ({type: SET_TOTAL_COUNT_USERS,countUsers})
-export const setIsFetching = (isFetching) => ({type: SET_TOUGLE_IS_FETCHING,isFetching})
-export const followingInProgressAC = (isFetching,userId) => ({type: FOLLOWING_IN_PROGRESS,isFetching,userId})
+export const setUsersAC = (users) => ({type: SET_USERS, users})
+export const setCurrentPage = (page) => ({type: SET_CURRENT_PAGE, page})
+export const setTotalCountUsersAC = (countUsers) => ({type: SET_TOTAL_COUNT_USERS, countUsers})
+export const setIsFetching = (isFetching) => ({type: SET_TOUGLE_IS_FETCHING, isFetching})
+export const followingInProgressAC = (isFetching, userId) => ({type: FOLLOWING_IN_PROGRESS, isFetching, userId})
 
 
+export const getUsers = (currentPage, countUsersOnCurrentPage) => {
+    return async (dispatch) => {
+        dispatch(setIsFetching(true));
+        let responce = await usersAPI.getUsers(currentPage, countUsersOnCurrentPage);
+        dispatch(setIsFetching(false));
+        dispatch(setUsersAC(responce.items));
+        dispatch(setTotalCountUsersAC(responce.totalCount));
+    }
+}
 
+export const follow = (userId) => {
+    return async (dispatch) => {
+        dispatch(followingInProgressAC(true, userId))
+        let responce = await usersAPI.followUser(userId);
+        dispatch(followingInProgressAC(false, userId))
+        dispatch(followAC(userId));
+    }
+}
 
+export const unfollow = (userId) => {
+    return async (dispatch) => {
+        dispatch(followingInProgressAC(true, userId));
+        let responce = await usersAPI.unFollowUser(userId);
+        dispatch(followingInProgressAC(false, userId))
+        dispatch(unfollowAC(userId));
+    }
+}
 
+export const pageChanged = (page, countUsersOnCurrentPage) => {
+    return async (dispatch) => {
+        dispatch(setIsFetching(true))
+        dispatch(setCurrentPage(page))
+        let responce = await usersAPI.getUsers(page, countUsersOnCurrentPage);
+        dispatch(setIsFetching(false))
+        dispatch(setUsersAC(responce.items));
+    }
+}
 
 
 export default usersReducer;
