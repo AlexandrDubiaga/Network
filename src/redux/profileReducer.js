@@ -89,7 +89,6 @@ export const getUserProfile = (userIdFromWithRouterParams) => {
     }
 }
 export const getUserStatus= (userId) => {
-    debugger
     return async (dispatch) => {
         let data = await  profileAPI.getUsersStatus(userId);
         dispatch(setUserStatus(data.data));

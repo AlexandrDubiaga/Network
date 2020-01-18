@@ -10,7 +10,6 @@ let initialState = {
 const authReducer = (state = initialState, action) => {
     switch (action.type) {
         case SET_USER_DATA: {
-            debugger
             return {
                 ...state,
                 ...action.data,
@@ -27,11 +26,21 @@ export const setUserDataAC = (id, email, login) => ({type: SET_USER_DATA, data: 
 
 export const authMe = () => {
     return async (dispatch) => {
-        let authData = authAPI.authUser().then(response => {
+        let authData = await authAPI.authUser().then(response => {
             if (response.data.resultCode === 0) {
                 let {id, email, login} = response.data.data
                 dispatch(setUserDataAC(id, email, login));
             }
+        })
+    }
+}
+export const loginUser=(data)=>{
+    return async (dispatch)=>{
+        await authAPI.loginUser(data).then(res=>{
+            if(res.resultCode===0){
+                dispatch(authMe());
+            }
+
         })
     }
 }

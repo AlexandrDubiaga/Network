@@ -32,7 +32,7 @@ export const profileAPI = {
         return instance.get(`profile/status/${id}`);
     },
     updateStatus(status) {
-        return instance.put(`profile/status`,{status:status});
+        return instance.put(`profile/status`, {status: status});
     }
 }
 
@@ -41,30 +41,11 @@ export const authAPI = {
     authUser() {
         return instance.get(`auth/me`);
     },
-    loginUser(email, password, rememberMe, captcha) {
-        return instance.post(`auth/login`, {
-            email: email,
-            password: password,
-            rememberMe: rememberMe,
-            captcha: captcha
-        })
-    },
-    logout() {
-        return instance.delete(`auth/login`).then(
-            response => {
-                return response.data
-            }
-        )
+    loginUser(userData) {
+        return instance.post(`auth/login`,{email:userData.email,password:userData.password})
     }
-
 
 }
 
 
-export const securityAPI = {
-    getCaptchaUrl() {
-        return instance.get(`security/get-captcha-url`);
-    }
-
-
-}
+export const securityAPI = {}

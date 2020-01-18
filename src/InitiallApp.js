@@ -11,6 +11,8 @@ import {connect} from "react-redux";
 import {compose} from "redux";
 import {authMe} from "./redux/authReducer";
 import {initializedAppThunkCreator} from "./redux/appReduce";
+import LoginContainer from "./components/Login/LoginContainer";
+import Preloader from "./components/common/Preloader";
 
 
 class InitiallApp extends React.Component {
@@ -19,14 +21,22 @@ class InitiallApp extends React.Component {
     }
 
     render() {
+        if(!this.props.initiallAuth){
+            return <Preloader/>
+        }
         return (
             <App />
         );
     }
 }
 
+let mapStateToProps=(state)=>{
+    return{
+        initiallAuth:state.app.initiallAuth
+    }
+}
 export default compose(
-    connect(null, {initializedAppThunkCreator})
+    connect(mapStateToProps, {initializedAppThunkCreator})
 )(InitiallApp);
 
 
@@ -40,7 +50,7 @@ export class App extends React.Component {
                     <Route path="/dialogs" render={() => <DialogsContainer/>}/>
                     <Route path="/profile/:userId?" render={() => <ProfileContainer  />}/>
                     <Route path="/users" render={() => <UsersContainer/>}/>
-                    <Route path="/login" render={() => <Login/>}/>
+                    <Route path="/login" render={() => <LoginContainer/>}/>
                 </div>
             </div>
         );
