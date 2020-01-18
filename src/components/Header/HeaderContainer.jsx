@@ -8,7 +8,7 @@ import {authMe} from "../../redux/authReducer";
 
 class HeaderContainer extends React.Component {
     componentDidMount() {
-        this.props.authMe();
+       // this.props.authMe();
     }
 
     render() {

@@ -23,7 +23,7 @@ const Users = props => {
                     <span>
                         <div>
                             <NavLink to={"/profile/"+u.id}>
-                                <img src={u.photos.small===null?"https://mirpozitiva.ru/uploads/posts/2016-09/medium/1474011210_15.jpg":u.photos.small}/>
+                                <img src={u.photos.small===null?"https://us.123rf.com/450wm/kritchanut/kritchanut1406/kritchanut140600088/29213190-businessman-silhouette-avatar-profile-picture.jpg?ver=6":u.photos.small}/>
                             </NavLink>
                         </div>
                         <div> <button disabled={props.followingInProgress.some(id=>id===u.id)}

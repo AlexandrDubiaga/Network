@@ -28,32 +28,12 @@ export const profileAPI = {
         return instance.get(`profile/${userId}`).then(responce => responce.data);
 
     },
-    updateUsersProfile(dataProfile) {
-        return instance.put(`profile`, dataProfile);
-
+    getUsersStatus(id) {
+        return instance.get(`profile/status/${id}`);
     },
-
-    getProfileStatus(userId) {
-        return instance.get(`profile/status/` + userId).then(
-            response => {
-
-                return response.data
-            }
-        )
-    },
-    updateStatus(dataStatus) {
-        return instance.put(`profile/stadtus`, {status: dataStatus});
-    },
-    savePhoto(photoFile) {
-        const formData = new FormData();
-        formData.append("image", photoFile)
-        return instance.put(`profile/photo`, formData, {headers: {'Content-Type': 'multipart/form-data'}}).then(
-            response => {
-                return response.data;
-            }
-        )
+    updateStatus(status) {
+        return instance.put(`profile/status`,{status:status});
     }
-
 }
 
 
