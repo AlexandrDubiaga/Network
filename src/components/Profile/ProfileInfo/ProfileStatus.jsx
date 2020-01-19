@@ -34,7 +34,7 @@ class ProfileStatus extends React.Component {
             <div>
                 {this.state.isVisible ? <div><input value={this.state.status} onChange={this.updateStatus} autoFocus={true} onBlur={this.setVisibleFalse}/></div>
                     :
-                    <div onDoubleClick={this.setVisibleTrue}> {this.props.status===''?'-----':this.props.status}</div>
+                    <div onDoubleClick={this.setVisibleTrue}>Статус: {this.props.status===''?'-----':this.props.status}</div>
                 }
             </div>
         );

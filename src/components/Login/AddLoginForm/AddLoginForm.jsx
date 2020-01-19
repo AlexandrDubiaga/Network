@@ -1,16 +1,17 @@
 import React from 'react';
+import style from '../Login.module.css'
 
 import { Field, reduxForm } from 'redux-form'
 
-let ContactForm = props => {
-    const { handleSubmit } = props
+let LoginForm = props => {
+    const { handleSubmit } = props;
     return (
-        <form onSubmit={handleSubmit}>
-            <div>
+        <form className={style.addLoginForm} onSubmit={handleSubmit}>
+            <div className={style.input}>
                 <label htmlFor="email">Email</label>
                 <Field name="email" component="input" type="text" />
             </div>
-            <div>
+            <div className={style.input}>
                 <label htmlFor="password">Password</label>
                 <Field name="password" component="input" type="password" />
             </div>
@@ -24,4 +25,4 @@ let ContactForm = props => {
 }
 
 
-export default reduxForm({form: 'login'})(ContactForm)
+export default reduxForm({form: 'login'})(LoginForm)
