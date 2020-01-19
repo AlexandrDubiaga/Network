@@ -3,7 +3,7 @@ import {connect} from "react-redux";
 import {compose} from "redux";
 import axios from 'axios';
 import Header from "./Header";
-import {authMe} from "../../redux/authReducer";
+import {authMe, logoutUser} from "../../redux/authReducer";
 
 
 class HeaderContainer extends React.Component {
@@ -26,5 +26,5 @@ let mapStateToProps = (state) => {
         isAuth: state.auth.isAuth
     }
 }
-export default compose(connect(mapStateToProps, {authMe}))(HeaderContainer);
+export default compose(connect(mapStateToProps, {authMe,logoutUser}))(HeaderContainer);
 

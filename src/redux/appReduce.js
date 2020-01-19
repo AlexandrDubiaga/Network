@@ -19,8 +19,7 @@ const appReducer = (state = initialState, action) => {
 export const initiallAuth=(val)=>({type:INITIALL_AUTH,val})
 
 export const initializedAppThunkCreator = () => (dispatch) => {
-    let promise = dispatch(authMe());
-    Promise.all([promise]).then(()=>{
+    let promise = dispatch(authMe()).then(()=>{
         dispatch(initiallAuth(true))
     })
 }
