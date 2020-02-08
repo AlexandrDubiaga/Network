@@ -2,26 +2,33 @@ import React from 'react';
 import style from '../Login.module.css'
 
 import { Field, reduxForm } from 'redux-form'
-
+import {Input} from "../../common/FormsControls";
+import {maxLenghtCreator, requairedField} from "../../../utils/validators/validators";
+let maxLeng = maxLenghtCreator(30)
 let LoginForm = props => {
     const { handleSubmit } = props;
     return (
         <form className={style.addLoginForm} onSubmit={handleSubmit}>
             <div className={style.input}>
                 <label htmlFor="email">Email</label>
-                <Field name="email" component="input" type="text" />
+                <Field validate={[requairedField,maxLeng]} name="email" component={Input} type="text" />
             </div>
             <div className={style.input}>
                 <label htmlFor="password">Password</label>
-                <Field name="password" component="input" type="password" />
+                <Field validate={[requairedField,maxLeng]} name="password" component={Input}  type="password" />
             </div>
             <div>
                 <label htmlFor="rememberMe">rememberMe</label>
-                <Field name="rememberMe" component="input" type="checkbox" />
+                <Field validate={[requairedField,maxLeng]} name="rememberMe" component={Input}  type="checkbox" />
             </div>
+            {props.capcha==''?'':
+                <div> <img src={props.capcha} /> <Field validate={[requairedField,maxLeng]}name="capcha" component={Input}  type="text" /></div>
+            }
             <button type="submit">Submit</button>
+
         </form>
     )
+
 }
 
 
