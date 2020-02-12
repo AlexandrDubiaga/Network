@@ -3,23 +3,17 @@ import style from './Dialogs.module.css';
 import Message from "./Message/Message";
 import DialogItem from "./DialogItem/Dialogitem";
 import {Redirect} from "react-router-dom";
+import AddMessageForm from "./AddMessageForm/AddMessageForm";
 
 
 const Dialogs = props => {
     const dialogsElements = props.dialogsPage.dialogs.map(dialog => <DialogItem name={dialog.name} id={dialog.id}/>);
     const messagesElements = props.dialogsPage.messages.map(mess => <Message message={mess.message}/>);
 
-    let newMessageRef = React.createRef();
-    let addMessage = () => {
-        props.sendNewMessageActionCreator();
+    let addMessage = (newMessage) => {
+        props.sendNewMessageActionCreator(newMessage.text);
     }
-    let onMessageChange = () => {
-        let text = newMessageRef.current.value;
-        props.updateNewMessageActionCreator(text);
-    }
-    if(!props.isAuth){
-        return <Redirect to={"login"} />
-    }
+
     return (
         <div className={style.dialogs}>
             <div className={style.dialogsItems}>
@@ -29,13 +23,7 @@ const Dialogs = props => {
                 {messagesElements}
             </div>
             <div>
-                <div>
-                    <textarea ref={newMessageRef} onChange={onMessageChange}
-                              value={props.dialogsPage.newMessageBody}/>
-                </div>
-                <div>
-                    <button onClick={addMessage}>Add Message</button>
-                </div>
+                <AddMessageForm onSubmit={addMessage}/>
             </div>
         </div>
     );

@@ -1,5 +1,5 @@
 import React from 'react';
-import {sendNewMessageActionCreator, updateNewMessageActionCreator} from "../../redux/dialogsReducer";
+import {sendNewMessageActionCreator} from "../../redux/dialogsReducer";
 import Dialogs from "./Dialogs";
 import {connect} from "react-redux";
 import {compose} from "redux";
@@ -12,5 +12,5 @@ let mapStateToProps = (state) => {
     }
 }
 let redirect = WithAuthRedirect(Dialogs)
-export default compose(connect(mapStateToProps, {sendNewMessageActionCreator,updateNewMessageActionCreator}))(redirect);
+export default compose(connect(mapStateToProps, {sendNewMessageActionCreator}))(redirect);
 

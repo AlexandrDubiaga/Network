@@ -1,0 +1,10 @@
+.addLoginForm {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    margin: 0 auto;
+}
+
+.addLoginForm .input input {
+    width: 300px;
+}
